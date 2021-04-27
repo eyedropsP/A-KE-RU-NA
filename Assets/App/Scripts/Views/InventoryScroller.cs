@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Akeruna.Views
@@ -7,10 +6,5 @@ namespace Akeruna.Views
 	public class InventoryScroller : MonoBehaviour
 	{
 		[SerializeField] private ScrollRect scrollRect;
-
-		public void Start()
-		{
-			
-		}
 	}
 }
