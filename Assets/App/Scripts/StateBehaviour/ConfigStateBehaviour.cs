@@ -19,7 +19,7 @@ namespace Akeruna.StateBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.X))
 			{
-				return GameState.Game;
+				return GameState.Main;
 			}
 
 			return OptionalEnum<GameState>.None;

@@ -1,33 +1,34 @@
-﻿using UniFsm;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Linq;
+using UniFsm;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Akeruna.StateBehaviour
 {
-	public sealed class MainStateBehaviour : StateBehaviour<GameState>
+	public sealed class MainStateBehaviour : UniTaskStateBehaviour<GameState>
 	{
-		public override void OnEnabled()
+		public override async UniTask<GameState> RunAsync(IUniTaskAsyncEnumerable<AsyncUnit> onTick, CancellationToken cancellationToken)
 		{
-			Debug.Log("Game enabled");
-		}
-
-		public override void OnDisabled()
-		{
-			Debug.Log("Game disabled");
-		}
-
-		public override OptionalEnum<GameState> Tick()
-		{
-			if (Input.GetKeyDown(KeyCode.X))
+			try
 			{
-				return GameState.Config;
-			}
+				await SceneManager.LoadSceneAsync("Main");
+				Debug.Log("MainState enabled");
 
-			if (Input.GetKeyDown(KeyCode.Z))
+				await onTick
+					.Take(2)
+					.ForEachAsync(_ => Debug.Log("MainState tick"), cancellationToken);
+
+				while (true)
+				{
+					await onTick.FirstOrDefaultAsync(cancellationToken);
+				}
+			}
+			finally
 			{
-				return GameState.Epilogue;
+				Debug.Log("MainState disabled");
 			}
-
-			return OptionalEnum<GameState>.None;
 		}
 	}
 }

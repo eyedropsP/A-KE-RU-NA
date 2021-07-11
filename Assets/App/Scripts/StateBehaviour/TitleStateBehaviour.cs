@@ -14,7 +14,8 @@ namespace Akeruna.StateBehaviour
 			try
 			{
 				Debug.Log("Title enabled");
-				await onTick.TakeWhile(_ => !Input.GetKeyDown(KeyCode.Z))
+				await onTick
+					.TakeWhile(_ => !Input.GetKeyDown(KeyCode.Z))
 					.ForEachAsync(_ => Debug.Log("StateA Tick"), cancellationToken);
 				return GameState.Prologue;
 			}

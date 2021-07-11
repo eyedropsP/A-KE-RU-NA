@@ -4,7 +4,7 @@
 	{
 		Title,
 		Prologue,
-		Game,
+		Main,
 		Config,
 		Epilogue,
 	}
